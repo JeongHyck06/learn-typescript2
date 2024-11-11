@@ -23,6 +23,10 @@ interface IRepository {
     delete();
 }
 
+interface IQureyRepository extends IRepository {
+    findManyByQuery(query);
+}
+
 //데이터 베이스 관련 로직
 class MongoRepository implements IRepository {
     constructor(private readonly connection: DatabaseConnection) {}
@@ -48,6 +52,7 @@ class MongoRepository implements IRepository {
 }
 
 class MySQLRepository implements IRepository {
+    constructor(private readonly connection: DatabaseConnection) {}
     save() {
         console.log('저장');
     }
@@ -68,5 +73,9 @@ class MySQLRepository implements IRepository {
     }
 }
 
-const repo1: IRepository = new MongoRepository(new DatabaseConnection());
-const repo2: IRepository = new MongoRepository(new DatabaseConnection());
+class MySQLQueryRepository extends MySQLRepository implements IQureyRepository {
+    findManyByQuery(query) {
+        console.log('query로 찾기');
+    }
+}
+const repo: IQureyRepository = new MySQLQueryRepository(new DatabaseConnection());

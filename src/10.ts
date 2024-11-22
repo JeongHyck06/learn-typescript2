@@ -13,7 +13,10 @@ class Book {
     }
 }
 
-function Logging(orginalMethod: Function, context: ClassMethodDecoratorContext) {
+function Logging(
+    orginalMethod: Function,
+    context: ClassMethodDecoratorContext
+) {
     console.log(orginalMethod, context);
     orginalMethod('world');
     console.log('logging !');
